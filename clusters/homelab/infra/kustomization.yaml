@@ -1,0 +1,8 @@
+# clusters/homelab/infra/kustomization.yaml
+resources:
+  - ingress-nginx
+  - cert-manager
+  - sealed-secrets
+  - reloader
+  - kube-resource-report
+  - cloudflare-tunnel
