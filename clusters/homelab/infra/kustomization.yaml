@@ -5,4 +5,3 @@ resources:
   - sealed-secrets
   - reloader
   - kube-resource-report
-  - cloudflare-tunnel
