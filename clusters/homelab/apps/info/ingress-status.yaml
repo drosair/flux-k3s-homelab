@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-status
+  namespace: ingress-nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/whitelist-source-range: 192.168.0.0/16
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - status.int.rosair.au
+      secretName: status-tls
+  rules:
+    - host: status.int.rosair.au
+      http:
+        paths:
+          - path: /nginx-status
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: ingress-nginx-controller
+                port:
+                  number: 10254
