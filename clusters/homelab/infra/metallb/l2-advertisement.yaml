@@ -3,4 +3,3 @@ kind: L2Advertisement
 metadata:
   name: local
   namespace: metallb-system
-spec: {}

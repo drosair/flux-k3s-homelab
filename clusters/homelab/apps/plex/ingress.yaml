@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: podinfo
-  namespace: info
+  name: plex
+  namespace: media
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -11,16 +11,16 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - info.int.rosair.au
-      secretName: info-tls
+        - plex.int.rosair.au
+      secretName: plex-tls
   rules:
-    - host: info.int.rosair.au
+    - host: plex.int.rosair.au
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: podinfo
+                name: plex
                 port:
-                  number: 9898
+                  number: 32400
