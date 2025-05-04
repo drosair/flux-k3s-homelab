@@ -18,7 +18,7 @@ spec:
       service:
         type: LoadBalancer
         externalTrafficPolicy: Local
-        loadBalancerIP: 192.168.5.81  # 👈 Must match MetalLB pool
+        loadBalancerIP: 192.168.0.81  # 👈 Must match MetalLB pool
     metrics:
       enabled: true
       serviceMonitor:
