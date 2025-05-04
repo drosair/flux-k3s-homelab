@@ -1,9 +1,9 @@
 # clusters/homelab/apps/kustomization.yaml
-#resources:
-#  - plex
-#  - sonarr
-#  - radarr
-#  - nzbget
-#  - home-assistant
-#  - mosquitto
-#  - authentik
+resources:
+  - plex
+  - sonarr
+  - radarr
+  - nzbget
+  - home-assistant
+  - mosquitto
+  - authentik
