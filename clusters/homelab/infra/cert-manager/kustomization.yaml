@@ -2,3 +2,4 @@ resources:
   - namespace.yaml
   - helmprepository.yaml
   - helmrelease.yaml
+  - clusterissuer.yaml
