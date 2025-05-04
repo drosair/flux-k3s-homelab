@@ -4,4 +4,3 @@ resources:
   - cert-manager
   - sealed-secrets
   - reloader
-  - kube-resource-report

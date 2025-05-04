@@ -1,22 +1,20 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kube-resource-report
-  namespace: kube-resource-report
+  name: podinfo
+  namespace: info
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
 spec:
   ingressClassName: nginx
   rules:
-    - host: report.int.rosair.au
+    - host: info.int.rosair.au
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: kube-resource-report
+                name: podinfo
                 port:
-                  number: 80
+                  number: 9898
