@@ -1,0 +1,6 @@
+resources:
+  - namespace.yaml
+  - helmprepository.yaml
+  - helmrelease.yaml
+  - ip-pool.yaml
+  - l2-advertisement.yaml
