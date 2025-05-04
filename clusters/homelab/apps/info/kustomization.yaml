@@ -3,3 +3,4 @@ resources:
   - helmprepository.yaml
   - helmrelease.yaml
   - ingress.yaml
+  - cert.yaml
