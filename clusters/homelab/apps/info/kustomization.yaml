@@ -4,4 +4,3 @@ resources:
   - helmrelease.yaml
   - info-ingress.yaml
   - status-ingress.yaml
-  - cert.yaml
