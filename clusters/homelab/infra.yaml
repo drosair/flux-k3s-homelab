@@ -23,4 +23,4 @@ spec:
       kind: HelmRelease
       name: cert-manager
       namespace: cert-manager
-  patchesStrategicMerge: []
+  patches: []
