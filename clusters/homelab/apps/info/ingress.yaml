@@ -6,15 +6,16 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+    cert-manager.io/cluster-issuer: letsencrypt-cloudflare
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
+        - info.int.rosair.me
         - info.int.rosair.au
       secretName: info-tls
   rules:
-    - host: info.int.rosair.au
+    - host: info.int.rosair.me
       http:
         paths:
           - path: /
