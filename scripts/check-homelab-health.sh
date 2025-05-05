@@ -3,7 +3,7 @@
 set -e
 
 METALLB_IP_RANGE="192.168.0.80-192.168.0.99"
-PODINFO_HOST="info.int.rosair.au"
+PODINFO_HOST="info.int.rosair.me"
 PODINFO_URL="https://${PODINFO_HOST}"
 
 echo "🔍 Checking MetalLB assigned IPs..."
