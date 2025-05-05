@@ -14,10 +14,9 @@ spec:
   tls:
     - hosts:
         - status.int.rosair.me
-        - status.int.rosair.au
       secretName: status-tls
   rules:
-    - host: status.int.rosair.au
+    - host: status.int.rosair.me
       http:
         paths:
           - path: /nginx-status

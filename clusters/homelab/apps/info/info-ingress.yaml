@@ -12,7 +12,6 @@ spec:
   tls:
     - hosts:
         - info.int.rosair.me
-        - info.int.rosair.au
       secretName: info-tls
   rules:
     - host: info.int.rosair.me
