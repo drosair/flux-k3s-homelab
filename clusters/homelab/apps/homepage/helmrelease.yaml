@@ -1,34 +1,33 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: mosquitto
+  name: homepage
   namespace: default
 spec:
   interval: 30m
   chart:
     spec:
-      chart: mosquitto
+      chart: homepage
       sourceRef:
         kind: HelmRepository
-        name: eclipse-mosquitto
+        name: homepage-charts
         namespace: flux-system
       version: "1.0.0" # Replace with actual version
   values:
-    persistence:
-      enabled: true
-      existingClaim: mosquitto-pvc
+    service:
+      type: LoadBalancer
     ingress:
       enabled: true
       className: nginx
       hosts:
-        - host: mqtt.int.rosair.me
+        - host: home.int.rosair.me
           paths:
             - path: /
               pathType: Prefix
       tls:
         - hosts:
-            - mqtt.int.rosair.me
-          secretName: mosquitto-tls
+            - home.int.rosair.me
+          secretName: homepage-tls
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -37,8 +36,6 @@ spec:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
-                    - nasrack
-                    - nasbox
                     - mac-mini
                     - macbook-pro
     tolerations:

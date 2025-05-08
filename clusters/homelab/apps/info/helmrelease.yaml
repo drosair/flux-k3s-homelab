@@ -18,7 +18,7 @@ spec:
       enabled: true
       className: nginx
       hosts:
-        - host: info.int.rosair.au
+        - host: info.int.rosair.me
           paths:
             - path: /
               pathType: Prefix

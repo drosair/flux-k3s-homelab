@@ -4,4 +4,4 @@ resources:
   - namespace.yaml
   - helmrepository.yaml
   - helmrelease.yaml
-  - mqtt-ingress.yaml
+  - home-ingress.yaml

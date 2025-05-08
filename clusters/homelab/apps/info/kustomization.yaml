@@ -1,6 +1,6 @@
 resources:
   - namespace.yaml
-  - helmprepository.yaml
+  - helmrepository.yaml
   - helmrelease.yaml
   - info-ingress.yaml
   - status-ingress.yaml

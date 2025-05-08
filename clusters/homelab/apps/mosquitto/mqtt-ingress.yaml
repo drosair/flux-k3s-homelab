@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mosquitto
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "TCP"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - mqtt.int.rosair.me
+      secretName: mosquitto-tls
+  rules:
+    - host: mqtt.int.rosair.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mosquitto
+                port:
+                  number: 1883  # Or 8883 if using TLS
