@@ -1,6 +1,6 @@
 # flux-k3s-homelab
 
-This is a GitOps-based Kubernetes home-lab using [FluxCD](https://fluxcd.io), Helm, and MetalLB, running on lightweight K3s clusters (e.g. Colima, Raspberry Pi, QNAP, etc.).
+This is a GitOps-based Kubernetes home-lab using [FluxCD](https://fluxcd.io), Helm, and MetalLB, running on lightweight K3s clusters (e.g., Colima, MacBook Pro, Mac Mini, QNAP, etc.).
 
 ## ✅ Features
 

@@ -1,7 +1,30 @@
 # clusters/homelab/infra/kustomization.yaml
 resources:
-  - ingress-nginx
   - cert-manager
-  - sealed-secrets
+  - ingress-nginx
   - reloader
-  - metallb
+  - sealed-secrets
+patches:
+  - target:
+      kind: HelmRelease
+      name: ingress-nginx
+    patch: |
+      spec:
+        values:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: In
+                        values:
+                          - macbook-pro
+                          # - mac-mini
+          tolerations:
+            - key: "node-role.kubernetes.io/control-plane"
+              operator: "Exists"
+              effect: "NoSchedule"
+            - key: "node-role.kubernetes.io/worker"
+              operator: "Exists"
+              effect: "NoSchedule"

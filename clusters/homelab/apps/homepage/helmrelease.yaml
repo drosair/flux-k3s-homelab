@@ -12,10 +12,9 @@ spec:
         kind: HelmRepository
         name: homepage-charts
         namespace: flux-system
-      version: "1.0.0" # Replace with actual version
   values:
     service:
-      type: LoadBalancer
+      type: NodePort
     ingress:
       enabled: true
       className: nginx
@@ -40,5 +39,8 @@ spec:
                     - macbook-pro
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      - key: "node-role.kubernetes.io/worker"
         operator: "Exists"
         effect: "NoSchedule"

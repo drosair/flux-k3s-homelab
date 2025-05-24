@@ -1,6 +1,6 @@
-# 🍓 Raspberry Pi Kubernetes Control Plane Setup
+# 🚀 MacBook Pro and Mac Mini Kubernetes Control Plane Setup
 
-This guide walks through setting up a Raspberry Pi running Raspberry Pi OS (Lite) as a Kubernetes control plane node using `k3s`. It includes embedded `etcd` storage, NFS-based backup, live log monitoring, voltage status checks, and PagerDuty alerting. It is designed for a home-lab or small-scale HA environment and focuses on simplicity, automation, and reliability.
+This guide walks through setting up a Kubernetes control plane using a MacBook Pro (M1 Max, 32GB RAM) as the primary node and a Mac Mini (M1, 8GB RAM) as the secondary/backup node. It includes embedded `etcd` storage, NFS-based backup, live log monitoring, and PagerDuty alerting. It is designed for a home-lab or small-scale HA environment and focuses on simplicity, automation, and reliability.
 
 ## ✅ Features
 
@@ -8,8 +8,7 @@ This guide walks through setting up a Raspberry Pi running Raspberry Pi OS (Lite
 * Automated etcd backups to NAS using NFS
 * Secure `kubectl` access and permission fixes
 * Realtime `k3s` log monitoring
-* Voltage monitoring with `vcgencmd`
-* PagerDuty alert integration on failure or undervoltage
+* PagerDuty alert integration on failure
 * Guidance for graceful shutdown and troubleshooting
 
 ---
@@ -149,7 +148,6 @@ Paste:
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 BACKUP_DIR="/mnt/nasbox/etcd"
 SNAPSHOT_NAME="etcd-snapshot-$TIMESTAMP.db"
-VCGENCMD_OUTPUT=$(vcgencmd get_throttled)
 
 /usr/local/bin/etcdctl \
   --endpoints=https://127.0.0.1:2379 \
@@ -158,15 +156,15 @@ VCGENCMD_OUTPUT=$(vcgencmd get_throttled)
   --key=/var/lib/rancher/k3s/server/tls/etcd/server-client.key \
   snapshot save "$BACKUP_DIR/$SNAPSHOT_NAME"
 
-if [ $? -ne 0 ] || [[ "$VCGENCMD_OUTPUT" != "throttled=0x0" ]]; then
+if [ $? -ne 0 ]; then
   curl -X POST https://events.pagerduty.com/v2/enqueue \
     -H "Content-Type: application/json" \
     -d '{
       "routing_key": "YOUR_ROUTING_KEY_HERE",
       "event_action": "trigger",
       "payload": {
-        "summary": "etcd backup failed or undervoltage detected on Pi control-plane",
-        "source": "kube-pi",
+        "summary": "etcd backup failed on Mac control-plane",
+        "source": "kube-mac",
         "severity": "error"
       }
     }'
@@ -232,35 +230,11 @@ journalctl -u etcd-backup.service
 
 ---
 
-## 🔌 Step 6: Voltage Monitoring via `vcgencmd`
-
-Install:
-
-```bash
-sudo apt install libraspberrypi-bin -y
-```
-
-Check voltage:
-
-```bash
-vcgencmd get_throttled
-dmesg | grep -i voltage
-```
-
-Disable Wi-Fi (if using Ethernet-only setup):
-
-```bash
-sudo nmcli radio wifi off
-```
-
----
-
 ## 🚨 PagerDuty Alerts (via etcd-backup.sh)
 
 PagerDuty alerts are triggered from the backup script:
 
 * On backup failure
-* On undervoltage
 
 Replace `YOUR_ROUTING_KEY_HERE` in the script with your real PagerDuty Events API v2 key.
 Test by forcing a failure (e.g., unmount NFS and run the script).
@@ -269,7 +243,7 @@ Test by forcing a failure (e.g., unmount NFS and run the script).
 
 ## ⏹ Graceful Shutdown
 
-To safely shut down the Pi:
+To safely shut down the Mac:
 
 ```bash
 sudo shutdown -h now
@@ -293,7 +267,7 @@ Then shut down.
 Fix:
 
 ```bash
-sudo chmod 640 /etc/rancher/k3s/k3s.yaml
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 sudo chgrp admin /etc/rancher/k3s/k3s.yaml
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ```
@@ -316,4 +290,4 @@ Check for:
 
 ---
 
-You're now running a production-ready Raspberry Pi Kubernetes control plane with secure backups, monitoring, and alerting. 🎉
+You're now running a production-ready Kubernetes control plane with secure backups, monitoring, and alerting. 🎉
